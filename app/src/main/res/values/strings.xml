@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Teng_Prateek</string>
+    <string name="title">Blood Pressure Readings</string>
+
+    <array name="familyMember">
+        <item>father@home.com</item>
+        <item>mother@home.com</item>
+        <item>grandma@home.com</item>
+        <item>grandpa@home.com</item>
+    </array>
 </resources>
