@@ -12,6 +12,10 @@
 
     <string name="reading_date">Reading Date</string>
     <string name="reading_time">Reading Time</string>
+    <string name="systolic_reading">Systolic Reading</string>
+    <string name="diastolic_reading">Diastolic Reading</string>
+
+
 
 
 </resources>
