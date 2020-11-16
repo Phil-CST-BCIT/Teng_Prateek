@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Teng_Prateek</string>
     <string name="title">Blood Pressure Readings</string>
+    <string name="familyMemberConfirmBtnText">OK</string>
+    <string name="readings_activity_label">Readings</string>
 
     <array name="familyMember">
         <item>father@home.com</item>

@@ -2,6 +2,7 @@ package com.bcit.teng_prateek;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,4 +39,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // Another interface callback
     }
 
+
+    public void onClickFamilyMemberConfirm(View view) {
+
+        Spinner spinner = (Spinner)findViewById(R.id.spinnerFamilyMember);
+        String value = spinner.getSelectedItem().toString();
+
+        Intent myIntent = new Intent(MainActivity.this, ReadingsActivity.class);
+        myIntent.putExtra("key", value);
+        startActivity(myIntent);
+
+
+    }
 }
