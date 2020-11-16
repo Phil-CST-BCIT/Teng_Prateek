@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-
+<!-- Title bar -->
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
@@ -17,12 +17,14 @@
         android:gravity="center"
         android:text="@string/title" />
 
+<!--  Family spinner  -->
     <Spinner
         android:id="@+id/spinnerFamilyMember"
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+<!--  Current date  -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,12 +46,9 @@
             android:layout_marginStart="5dp"
             android:layout_weight="1"
             android:text=""/>
-
-
-
-
     </LinearLayout>
 
+<!--  Current time  -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -71,10 +70,9 @@
             android:layout_marginStart="5dp"
             android:layout_weight="1"
             android:text="" />
-
-
     </LinearLayout>
 
+<!--  Systolic reading input  -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -95,11 +93,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
-
     </LinearLayout>
 
+<!--  Diastolic reading input  -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -120,7 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
 
     </LinearLayout>
