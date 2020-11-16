@@ -6,16 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import java.sql.Time;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.SimpleTimeZone;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -24,10 +20,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         populateSpinner();
         String currentDate = populateCurrentDate();
         String currentTime = populateCurrentTime();
+
+        Button btnSubmit = findViewById(R.id.buttonSubmit);
     }
 
     /**
@@ -89,6 +86,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // Another interface callback
     }
 
+    /**
+     * Anonymous class for button listener
+     */
+    private View.OnClickListener btnListener = new View.OnClickListener() {
 
-
+        @Override
+        public void onClick(View v) {
+            //do something when a button is clicked
+            return;
+        }
+    };
 }
