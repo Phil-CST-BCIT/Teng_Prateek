@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         String currentTime = populateCurrentTime();
 
         Button btnSubmit = findViewById(R.id.buttonSubmit);
+        //hook the submit button with the button listener class
+        btnSubmit.setOnClickListener(btnListener);
     }
 
     /**
@@ -93,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         @Override
         public void onClick(View v) {
-            //do something when a button is clicked
+            //do something when the submit button is clicked
             return;
         }
     };
