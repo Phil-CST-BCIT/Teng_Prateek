@@ -30,6 +30,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         String currentTime = populateCurrentTime();
     }
 
+    /**
+     * gets the current local date
+     * @return dateStr: a string of date in format Month:Day:Year
+     */
     private String populateCurrentDate() {
         String dateStr = new SimpleDateFormat("MM dd, yyyy", Locale.getDefault()).format(new Date());
         TextView date  = (TextView) findViewById(R.id.textViewDate);
@@ -38,6 +42,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         return dateStr;
     }
 
+    /**
+     * gets the current local time
+     * @return timeStr: a string of time in format Hour:Minute:Second
+     */
     private String populateCurrentTime() {
         String timeStr = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
         TextView time = (TextView) findViewById(R.id.textViewTime);
@@ -46,6 +54,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         return timeStr;
     }
 
+
+    /**
+     * populates the family member spinner with data from strings.xml
+     */
     private void populateSpinner() {
         Spinner spinner = (Spinner) findViewById(R.id.spinnerFamilyMember);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -56,11 +68,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
     }
+
+    /**
+     * the family member spinner listener
+     * @param parent
+     * @param view
+     * @param pos
+     * @param id
+     */
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         // An item was selected. You can retrieve the selected item using
         // parent.getItemAtPosition(pos)
     }
 
+    /**
+     * if nothing is selected then do...
+     * @param parent
+     */
     public void onNothingSelected(AdapterView<?> parent) {
         // Another interface callback
     }
