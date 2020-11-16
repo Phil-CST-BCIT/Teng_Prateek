@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Teng_Prateek</string>
     <string name="title">Blood Pressure Readings</string>
-    <string name="familyMemberConfirmBtnText">OK</string>
+    <string name="familyMemberConfirmBtnText">View All Readings</string>
     <string name="readings_activity_label">Readings</string>
 
 
@@ -17,9 +17,7 @@
     <string name="systolic_reading">Systolic Reading</string>
     <string name="diastolic_reading">Diastolic Reading</string>
     <string name="submit_btn">submit</string>
-
-
-
+    <string name="generateReportBtnText">Generate Report</string>
 
 
 </resources>

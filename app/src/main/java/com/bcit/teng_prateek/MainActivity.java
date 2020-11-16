@@ -1,25 +1,52 @@
 package com.bcit.teng_prateek;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    EditText editTextSystolic;
+    EditText editTextDiastolic;
+    TextView date;
+    TextView time;
+
+
+    DatabaseReference databaseReadings;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        editTextDiastolic = findViewById(R.id.editTextDiastolic);
+        editTextSystolic = findViewById(R.id.editTextSystolic);
+        date = findViewById(R.id.textViewDate);
+        time = findViewById(R.id.textViewTime);
 
         populateSpinner();
         String currentDate = populateCurrentDate();
@@ -96,8 +123,47 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         @Override
         public void onClick(View v) {
-            //do something when the submit button is clicked
-            return;
+            int systolic = Integer.parseInt(editTextSystolic.getText().toString().trim());
+            int diastolic = Integer.parseInt(editTextDiastolic.getText().toString().trim());
+            String datetime = date.getText().toString().trim() + " " + time.getText().toString().trim();
+
+            if (systolic == 0) {
+                Toast.makeText(MainActivity.this, "You must enter a Systolic value.", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (diastolic == 0) {
+                Toast.makeText(MainActivity.this, "You must enter a Diastolic value.", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            Spinner spinner = (Spinner)findViewById(R.id.spinnerFamilyMember);
+
+            databaseReadings = FirebaseDatabase.getInstance().getReference("users/" + spinner.getSelectedItem().toString().split("@")[0]);
+
+            String id = databaseReadings.push().getKey();
+            Reading reading = new Reading(id, systolic, diastolic, datetime);
+
+            Task setValueTask = databaseReadings.child(id).setValue(reading);
+
+            setValueTask.addOnSuccessListener(new OnSuccessListener() {
+                @Override
+                public void onSuccess(Object o) {
+                    Toast.makeText(MainActivity.this,"Reading added.",Toast.LENGTH_LONG).show();
+
+                    editTextDiastolic.setText("");
+                    editTextSystolic.setText("");
+                }
+            });
+
+            setValueTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(MainActivity.this,
+                            "something went wrong.\n" + e.toString(),
+                            Toast.LENGTH_SHORT).show();
+                }
+            });            return;
         }
     };
 
@@ -109,7 +175,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Intent myIntent = new Intent(MainActivity.this, ReadingsActivity.class);
         myIntent.putExtra("key", value);
         startActivity(myIntent);
+    }
 
+    private void addReading() {
 
     }
 }
