@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "858835927204",
+    "firebase_url": "https://tengprateek.firebaseio.com",
+    "project_id": "tengprateek",
+    "storage_bucket": "tengprateek.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858835927204:android:700271fe53b11cd0b92631",
+        "android_client_info": {
+          "package_name": "com.bcit.teng_prateek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "858835927204-cblv66ih3cdipnl8j55tnqsju15mc2v3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bcit.teng_prateek",
+            "certificate_hash": "3e2f9c152dc222e3275794302e0349dd8e79f8ca"
+          }
+        },
+        {
+          "client_id": "858835927204-i0lqnhhgjjkj45l0el8sehloi4681ual.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDw_Spe9l_SkeKm7LK02x72e2cwRSF4JjM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "858835927204-i0lqnhhgjjkj45l0el8sehloi4681ual.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
