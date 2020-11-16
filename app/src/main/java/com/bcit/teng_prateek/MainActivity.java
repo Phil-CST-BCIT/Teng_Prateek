@@ -6,7 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.SimpleTimeZone;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -17,6 +26,24 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
         populateSpinner();
+        String currentDate = populateCurrentDate();
+        String currentTime = populateCurrentTime();
+    }
+
+    private String populateCurrentDate() {
+        String dateStr = new SimpleDateFormat("MM dd, yyyy", Locale.getDefault()).format(new Date());
+        TextView date  = (TextView) findViewById(R.id.textViewDate);
+        date.setText(dateStr);
+
+        return dateStr;
+    }
+
+    private String populateCurrentTime() {
+        String timeStr = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+        TextView time = (TextView) findViewById(R.id.textViewTime);
+        time.setText(timeStr);
+
+        return timeStr;
     }
 
     private void populateSpinner() {

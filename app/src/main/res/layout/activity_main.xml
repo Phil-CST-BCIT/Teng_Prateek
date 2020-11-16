@@ -37,13 +37,15 @@
             android:layout_weight="1"
             android:text="@string/reading_date" />
 
-        <EditText
-            android:id="@+id/editTextDate2"
+        <TextView
+            android:id="@+id/textViewDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:layout_weight="1"
-            android:ems="8"
-            android:inputType="date" />
+            android:text=""/>
+
+
 
 
     </LinearLayout>
@@ -62,13 +64,15 @@
             android:layout_weight="1"
             android:text="@string/reading_time" />
 
-        <EditText
-            android:id="@+id/editTextReadingTime"
+        <TextView
+            android:id="@+id/textViewTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:layout_weight="1"
-            android:ems="8"
-            android:inputType="time" />
+            android:text="" />
+
+
     </LinearLayout>
 
     <LinearLayout
