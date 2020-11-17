@@ -27,6 +27,7 @@ public class ReportActivity extends AppCompatActivity {
     TextView textViewSystolicReading;
     TextView textViewDiastolicReading;
     TextView textViewAvg;
+    TextView textViewTitle;
     String spinnerSel;
 
     @Override
@@ -41,6 +42,11 @@ public class ReportActivity extends AppCompatActivity {
         rdList = new ArrayList<>();
         myDatabase = FirebaseDatabase.getInstance().getReference("users/" + spinnerSel);
 
+        textViewTitle = findViewById(R.id.textViewReportTitle);
+        textViewEmail = findViewById(R.id.textViewFamilyMemberEmail);
+        textViewSystolicReading = findViewById(R.id.textViewAvgSystolic);
+        textViewDiastolicReading = findViewById(R.id.textViewAvgDiastolic);
+        textViewAvg = findViewById(R.id.textViewAvgCondition);
 
     }
 
@@ -86,7 +92,7 @@ public class ReportActivity extends AppCompatActivity {
                     }
                 }
 
-                systolicSum = systolicSum / counter;
+                systolicSum =  systolicSum / counter;
                 diastolicSum = diastolicSum / counter;
 
                 populateData(systolicSum, diastolicSum, month);
@@ -96,20 +102,48 @@ public class ReportActivity extends AppCompatActivity {
 
                 if(spinnerSel.equals("father")) {
                     textViewEmail.setText(R.string.father_email);
-
+                    populateCommonFields(systolicAvg, diastolicAvg, month);
                 } else if(spinnerSel.equals("mather")) {
-
+                    textViewEmail.setText(R.string.mother_email);
+                    populateCommonFields(systolicAvg, diastolicAvg, month);
                 } else if(spinnerSel.equals("grandpa")) {
-
+                    textViewEmail.setText(R.string.grandpa_email);
+                    populateCommonFields(systolicAvg, diastolicAvg, month);
                 } else {
-
+                    textViewEmail.setText(R.string.grandma_email);
+                    populateCommonFields(systolicAvg, diastolicAvg, month);
                 }
+            }
+
+            private void populateCommonFields(double systolicAvg, double diastolicAvg, String month) {
+                Date date = new Date();
+                LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                String year = Integer.toString(localDate.getYear());
+
+                String title = textViewTitle.getText().toString() + " " + month + " " + year;
+                String sysAvg = String.format("%1$, .2f", systolicAvg);
+                String diaAvg = String.format("%1$, .2f", diastolicAvg);
+                String conAvg = condition(systolicAvg, diastolicAvg);
+                textViewTitle.setText(title);
+                textViewSystolicReading.setText(sysAvg);
+                textViewDiastolicReading.setText(diaAvg);
+                textViewAvg.setText(conAvg);
+            }
+
+            private String condition(double systolicAvg, double diastolicAvg) {
+
+                if(systolicAvg < 120 && diastolicAvg < 80)
+                    return "Normal";
+                else if ((systolicAvg > 120 && systolicAvg < 129) && diastolicAvg < 80)
+                    return "Elevated";
+                else if ((systolicAvg > 130 && systolicAvg < 139) || (diastolicAvg > 80 &&diastolicAvg < 89))
+                    return "Stage 1";
+                else if ((systolicAvg > 140) || (diastolicAvg >= 90))
+                    return "Stage 2";
+                else
+                    return "Crisis";
 
             }
         });
-
-
-
-
     }
 }
