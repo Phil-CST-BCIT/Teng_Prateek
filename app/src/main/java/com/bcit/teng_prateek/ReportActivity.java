@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -13,12 +14,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class ReportActivity extends AppCompatActivity {
 
     ArrayList<Reading> readings;
     DatabaseReference myDatabase;
+    TextView tvDiastolicReading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,7 @@ public class ReportActivity extends AppCompatActivity {
         setContentView(R.layout.activity_report);
 
         readings = new ArrayList<>();
+        tvDiastolicReading = findViewById(R.id.textViewFatherDiastolic);
         myDatabase = FirebaseDatabase.getInstance().getReference("users/");
         Intent my_intent = getIntent();
 
@@ -45,11 +50,16 @@ public class ReportActivity extends AppCompatActivity {
                 for(DataSnapshot families : snapshot.getChildren()) {
                     for(DataSnapshot ds : families.getChildren()) {
                         Reading temp = ds.getValue(Reading.class);
-                        Reading oneReading = new Reading(temp.getId(), temp.getSystolic(), temp.getDiastolic(), temp.getDatetime());
-                        readings.add(oneReading);
+                        readings.add(temp);
                     }
                 }
+
+                int dias = readings.get(0).getDiastolic();
+
+                tvDiastolicReading.setText(Integer.toString(dias));
             }
+
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
