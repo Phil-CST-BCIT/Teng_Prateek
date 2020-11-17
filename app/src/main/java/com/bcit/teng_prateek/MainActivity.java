@@ -1,8 +1,12 @@
 package com.bcit.teng_prateek;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -123,6 +127,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             int diastolic = Integer.parseInt(editTextDiastolic.getText().toString().trim());
             String datetime = date.getText().toString().trim() + " " + time.getText().toString().trim();
 
+//            AlertDialogue is triggered if systolic > 180 and/or diastolic > 120
+            if(systolic > 180 || diastolic > 120) {
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Hypertensive Crisis")
+                        .setMessage("Consult your doctor immediately")
+                        .setNegativeButton(R.string.dismiss, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+
+
             if (systolic == 0) {
                 Toast.makeText(MainActivity.this, "You must enter a Systolic value.", Toast.LENGTH_LONG).show();
                 return;
@@ -138,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             databaseReadings = FirebaseDatabase.getInstance().getReference("users/" + spinner.getSelectedItem().toString().split("@")[0]);
 
             String id = databaseReadings.push().getKey();
+
             Reading reading = new Reading(id, systolic, diastolic, datetime);
 
             Task setValueTask = databaseReadings.child(id).setValue(reading);
