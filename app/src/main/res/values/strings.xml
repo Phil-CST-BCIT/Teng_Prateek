@@ -3,21 +3,24 @@
     <string name="title">Blood Pressure Readings</string>
     <string name="familyMemberConfirmBtnText">View All Readings</string>
     <string name="readings_activity_label">Readings</string>
-
-
     <array name="familyMember">
         <item>father@home.com</item>
         <item>mother@home.com</item>
         <item>grandma@home.com</item>
         <item>grandpa@home.com</item>
     </array>
-
     <string name="reading_date">Reading Date</string>
     <string name="reading_time">Reading Time</string>
     <string name="systolic_reading">Systolic Reading</string>
     <string name="diastolic_reading">Diastolic Reading</string>
     <string name="submit_btn">submit</string>
     <string name="generateReportBtnText">Generate Report</string>
+    <string name="report_title">Month-to-date average readings for</string>
+    <string name="family_member_lb">Family Member</string>
+    <string name="avg_lb">Average Condition</string>
+
+
+
 
 
 </resources>
