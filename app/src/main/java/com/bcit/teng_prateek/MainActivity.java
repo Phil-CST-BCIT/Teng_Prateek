@@ -32,10 +32,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     TextView date;
     TextView time;
 
-
     DatabaseReference databaseReadings;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,7 +176,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onClick(View v) {
         Intent generateReportIntent = new Intent(MainActivity.this, ReportActivity.class);
+        Spinner spinner = (Spinner)findViewById(R.id.spinnerFamilyMember);
+        String spinnerSelection = spinner.getSelectedItem().toString().split("@")[0];
+
+        generateReportIntent.putExtra("sSel", spinnerSelection);
+
         startActivity(generateReportIntent);
+
+
     }
 
 
