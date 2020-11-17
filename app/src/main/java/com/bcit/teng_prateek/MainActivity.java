@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,7 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -49,8 +48,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         time = findViewById(R.id.textViewTime);
 
         populateSpinner();
-        String currentDate = populateCurrentDate();
-        String currentTime = populateCurrentTime();
+        populateCurrentDate();
+        populateCurrentTime();
 
         Button btnSubmit = findViewById(R.id.buttonSubmit);
         //hook the submit button with the button listener class
@@ -61,24 +60,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
      * gets the current local date
      * @return dateStr: a string of date in format Month:Day:Year
      */
-    private String populateCurrentDate() {
+    private void populateCurrentDate() {
         String dateStr = new SimpleDateFormat("MM dd, yyyy", Locale.getDefault()).format(new Date());
         TextView date  = (TextView) findViewById(R.id.textViewDate);
         date.setText(dateStr);
-
-        return dateStr;
     }
 
     /**
      * gets the current local time
      * @return timeStr: a string of time in format Hour:Minute:Second
      */
-    private String populateCurrentTime() {
+    private void populateCurrentTime() {
         String timeStr = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
         TextView time = (TextView) findViewById(R.id.textViewTime);
         time.setText(timeStr);
-
-        return timeStr;
     }
 
 
@@ -177,7 +172,5 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(myIntent);
     }
 
-    private void addReading() {
 
-    }
 }
