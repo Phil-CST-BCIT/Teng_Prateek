@@ -1,7 +1,8 @@
 package com.bcit.teng_prateek;
 
-import android.support.v4.app.INotificationSideChannel;
-
+/**
+ * The Reading class represents one record including date, time, systolic reading, and diastolic reading
+ */
 public class Reading {
 
     private String id;

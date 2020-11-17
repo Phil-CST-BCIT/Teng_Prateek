@@ -1,11 +1,15 @@
 package com.bcit.teng_prateek;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,21 +26,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     EditText editTextSystolic;
     EditText editTextDiastolic;
     TextView date;
     TextView time;
 
-
     DatabaseReference databaseReadings;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,36 +49,36 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         time = findViewById(R.id.textViewTime);
 
         populateSpinner();
-        String currentDate = populateCurrentDate();
-        String currentTime = populateCurrentTime();
+        populateCurrentDate();
+        populateCurrentTime();
 
         Button btnSubmit = findViewById(R.id.buttonSubmit);
         //hook the submit button with the button listener class
         btnSubmit.setOnClickListener(btnListener);
+
+        // starts ReportActivity
+        Button btnGenerateReport = findViewById(R.id.generateReportBtn);
+        btnGenerateReport.setOnClickListener(this);
     }
 
     /**
      * gets the current local date
      * @return dateStr: a string of date in format Month:Day:Year
      */
-    private String populateCurrentDate() {
+    private void populateCurrentDate() {
         String dateStr = new SimpleDateFormat("MM dd, yyyy", Locale.getDefault()).format(new Date());
         TextView date  = (TextView) findViewById(R.id.textViewDate);
         date.setText(dateStr);
-
-        return dateStr;
     }
 
     /**
      * gets the current local time
      * @return timeStr: a string of time in format Hour:Minute:Second
      */
-    private String populateCurrentTime() {
+    private void populateCurrentTime() {
         String timeStr = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
         TextView time = (TextView) findViewById(R.id.textViewTime);
         time.setText(timeStr);
-
-        return timeStr;
     }
 
 
@@ -127,6 +127,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             int diastolic = Integer.parseInt(editTextDiastolic.getText().toString().trim());
             String datetime = date.getText().toString().trim() + " " + time.getText().toString().trim();
 
+//            AlertDialogue is triggered if systolic > 180 and/or diastolic > 120
+            if(systolic > 180 || diastolic > 120) {
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Hypertensive Crisis")
+                        .setMessage("Consult your doctor immediately")
+                        .setNegativeButton(R.string.dismiss, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+
+
             if (systolic == 0) {
                 Toast.makeText(MainActivity.this, "You must enter a Systolic value.", Toast.LENGTH_LONG).show();
                 return;
@@ -142,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             databaseReadings = FirebaseDatabase.getInstance().getReference("users/" + spinner.getSelectedItem().toString().split("@")[0]);
 
             String id = databaseReadings.push().getKey();
+
             Reading reading = new Reading(id, systolic, diastolic, datetime);
 
             Task setValueTask = databaseReadings.child(id).setValue(reading);
@@ -177,7 +189,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(myIntent);
     }
 
-    private void addReading() {
+    @Override
+    public void onClick(View v) {
+        Intent generateReportIntent = new Intent(MainActivity.this, ReportActivity.class);
+        Spinner spinner = (Spinner)findViewById(R.id.spinnerFamilyMember);
+        String spinnerSelection = spinner.getSelectedItem().toString().split("@")[0];
+
+        generateReportIntent.putExtra("sSel", spinnerSelection);
+
+        startActivity(generateReportIntent);
+
 
     }
+
+
 }

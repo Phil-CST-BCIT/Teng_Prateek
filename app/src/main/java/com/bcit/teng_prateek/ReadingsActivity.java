@@ -28,6 +28,7 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 public class ReadingsActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
+
     RecyclerAdapter recyclerAdapter;
 
     List<Reading> readingList;
@@ -94,6 +95,7 @@ public class ReadingsActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+
         super.onStart();
 
         databaseReadings.addListenerForSingleValueEvent(new ValueEventListener() {
