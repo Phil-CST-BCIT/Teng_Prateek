@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     EditText editTextSystolic;
     EditText editTextDiastolic;
@@ -54,6 +54,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Button btnSubmit = findViewById(R.id.buttonSubmit);
         //hook the submit button with the button listener class
         btnSubmit.setOnClickListener(btnListener);
+
+        // starts ReportActivity
+        Button btnGenerateReport = findViewById(R.id.generateReportBtn);
+        btnGenerateReport.setOnClickListener(this);
     }
 
     /**
@@ -170,6 +174,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Intent myIntent = new Intent(MainActivity.this, ReadingsActivity.class);
         myIntent.putExtra("key", value);
         startActivity(myIntent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent generateReportIntent = new Intent(MainActivity.this, ReportActivity.class);
+        startActivity(generateReportIntent);
     }
 
 
