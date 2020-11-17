@@ -112,7 +112,7 @@ public class ReportActivity extends AppCompatActivity {
                         textViewEmail.setText(R.string.father_email);
                         populateCommonFields(systolicAvg, diastolicAvg, month);
                         break;
-                    case "mather":
+                    case "mother":
                         textViewEmail.setText(R.string.mother_email);
                         populateCommonFields(systolicAvg, diastolicAvg, month);
                         break;
