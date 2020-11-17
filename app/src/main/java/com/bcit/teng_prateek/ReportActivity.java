@@ -30,7 +30,6 @@ public class ReportActivity extends AppCompatActivity {
         setContentView(R.layout.activity_report);
 
         readings = new ArrayList<>();
-        tvDiastolicReading = findViewById(R.id.textViewFatherDiastolic);
         myDatabase = FirebaseDatabase.getInstance().getReference("users/");
         Intent my_intent = getIntent();
 
