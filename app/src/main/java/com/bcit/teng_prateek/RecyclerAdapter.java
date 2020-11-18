@@ -69,6 +69,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                                     int systolic = Integer.parseInt(systolicUD.getText().toString());
                                     int diastolic = Integer.parseInt(diastolicUD.getText().toString());
 
+                                    if(systolic > 180 || diastolic > 120) {
+                                        new AlertDialog.Builder(view.getContext())
+                                                .setTitle("Hypertensive Crisis")
+                                                .setMessage("Consult your doctor immediately")
+                                                .setNegativeButton(R.string.dismiss, null)
+                                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                                .show();
+                                    }
+
+
                                     Reading reading = new Reading(readingList.get(getAdapterPosition()).getId(),systolic,diastolic,readingList.get(getAdapterPosition()).getDatetime());
 
                                     Task setValueTask = dbRef.setValue(reading);
