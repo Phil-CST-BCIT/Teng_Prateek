@@ -4,9 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -31,12 +28,13 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
+    private static DatabaseReference databaseReadings;
     EditText editTextSystolic;
     EditText editTextDiastolic;
     TextView date;
     TextView time;
 
-    DatabaseReference databaseReadings;
+//    DatabaseReference databaseReadings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,6 +197,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         startActivity(generateReportIntent);
 
+
+    }
+
+    public static void updateReading(String user, String id, int systolic, int diastolic, String datetime) {
+        databaseReadings = FirebaseDatabase.getInstance().getReference("users/" + user);
 
     }
 

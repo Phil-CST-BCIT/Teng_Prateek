@@ -6,10 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -34,49 +41,84 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             sysdias = itemView.findViewById(R.id.readingRowSysDiasTextView);
             note = itemView.findViewById(R.id.readingRowNoteTextView);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                    Toast.makeText(itemView.getContext(), "SHORT" + getAdapterPosition(),Toast.LENGTH_SHORT).show();
-
-                }
-            });
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-//                    Toast.makeText(itemView.getContext(), "LONG" + getAdapterPosition(),Toast.LENGTH_SHORT).show();
 
                     LayoutInflater inflater = this.getLayoutInflater();
-                    View view = inflater.inflate(R.layout.update_delete_dialog, null);  // this line
+                    final View view = inflater.inflate(R.layout.update_delete_dialog, null);  // this line
 
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
                     alertDialog.setView(view);
 
-                    EditText systolicUD = view.findViewById(R.id.editTextSystolicUD);
-                    EditText diastolicUD = view.findViewById(R.id.editTextDiastolicUD);
-
+                    final EditText systolicUD = view.findViewById(R.id.editTextSystolicUD);
+                    final EditText diastolicUD = view.findViewById(R.id.editTextDiastolicUD);
 
                     systolicUD.setText("" + readingList.get(getAdapterPosition()).getSystolic());
                     diastolicUD.setText("" + readingList.get(getAdapterPosition()).getDiastolic());
+
+                    DatabaseReference databaseReadings = FirebaseDatabase.getInstance().getReference("users/" + ReadingsActivity.getUser());
+
+                    final DatabaseReference dbRef = databaseReadings.child(readingList.get(getAdapterPosition()).getId());
 
                     alertDialog.setTitle("Modify / Delete Reading");
                     alertDialog.setPositiveButton("UPDATE",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
 
+                                    int systolic = Integer.parseInt(systolicUD.getText().toString());
+                                    int diastolic = Integer.parseInt(diastolicUD.getText().toString());
+
+                                    Reading reading = new Reading(readingList.get(getAdapterPosition()).getId(),systolic,diastolic,readingList.get(getAdapterPosition()).getDatetime());
+
+                                    Task setValueTask = dbRef.setValue(reading);
+
+                                    setValueTask.addOnSuccessListener(new OnSuccessListener() {
+                                        @Override
+                                        public void onSuccess(Object o) {
+                                            Toast.makeText(view.getContext(),
+                                                    "Reading Updated.",Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+
+                                    setValueTask.addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(view.getContext(),
+                                                    "Something went wrong.\n" + e.toString(),
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 }
                             });
                     alertDialog.setNeutralButton("DELETE",
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    Task setRemoveTask = dbRef.removeValue();
+                                    RecyclerAdapter.this.notifyDataSetChanged();
+                                    setRemoveTask.addOnSuccessListener(new OnSuccessListener() {
+                                        @Override
+                                        public void onSuccess(Object o) {
+                                            Toast.makeText(view.getContext(),
+                                                    "Reading Deleted.",Toast.LENGTH_LONG).show();
+                                        }
+                                    });
 
+                                    setRemoveTask.addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(view.getContext(),
+                                                    "Something went wrong.\n" + e.toString(),
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 }
                             });
                     alertDialog.setNegativeButton("CANCEL",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-
+                                    dialog.dismiss();
                                 }
                             });
                     alertDialog.show();
